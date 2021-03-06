@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+
+<head style="text-align:center;">
+	<title>Servidor de filtrado de imagenes</title>
+</head>
+
+<body style="background-color:#909497;">
+	
+	<h1 style="text-align:center;">Servidor de filtrado de imagenes</h1>
+
+	<div style="text-align:center;">
+		<h5><b>Seleccione la imagen:</b></h5>
+		<input id='img_input' type='file' accept='image/*' name='image'/ onchange="getFilename(this)">
+		<p><img id='preview_img' /></p>
+		<p id="base64_text"></p> <!-- This code is just for debugging --> 
+	</div>
+
+	<div style="text-align:center;">
+		<label for="opcion">Funcion:</label>
+		<input type="radio" name="opcion" value="0" checked="checked">Filtrar</input>
+		<input type="radio" name="opcion" value="1">Clasificar</input>
+	</div>	
+
+	<div style="text-align:center;"> 
+		<label for="ip">IP:</label><br>
+  		<input type="text" id="ip" name="ip" value="Dir IP"><br>	
+  	</div>
+
+	<div style="text-align:center;">
+		<label for="puerto">Puerto:</label><br>
+  		<input type="text" id="puerto" name="puerto" value="1717"><br>	
+  	</div>
+
+	<script type="text/javascript">
+		var img_data, canvas, img;
+		function handleFileSelect(evt) {
+		    var files = evt.target.files;
+		    for (var i = 0, f; f = files[i]; i++) {
+		      	if (!f.type.match('image.*')) {
+		        	continue;
+		      	}
+		      	var reader = new FileReader();
+		      	reader.onload = (function(theFile) {
+		        	return function(e) {
+		          		document.getElementById("preview_img").src = e.target.result;
+		          		img = document.getElementById("preview_img");
+					    canvas = document.createElement("canvas");
+			  			canvas.width = img.width;
+			  			canvas.height = img.height;
+			   			var ctx = canvas.getContext("2d");
+						ctx.drawImage(img, 0, 0);
+			   			img_data = ctx.getImageData(0, 0, img.width, img.height).data.toString();
+			   			var temp = '', count = 1;
+			   			for (var i = 0; i < img_data.length; i++) {
+			   				if(img_data.charAt(i) == ','){
+			   					count++;
+			   				}
+			   				if(count%4 != 0){
+			   					temp += img_data.charAt(i)
+			   				}
+						}
+						img_data = temp;
+			   			console.log(img_data);					
+						document.getElementById("base64_text").innerHTML = "Imagen cargada Presione <b>Procesar</b>.";
+		        }})(f);
+		      	reader.readAsDataURL(f);
+		    }
+  		}
+
+  		function getFilename(fileInput) {
+			var files = fileInput.files;
+    		nombre = files[0].name;
+    		var punto = 0;
+    		var nombrex = "";
+			for (var i=0, length=nombre.length; i<length; i++) {
+		  		if (nombre[i]=='.') {
+		   			console.log("es punto");
+		   			punto=i;
+		    		break;
+		  		}
+		  		else{
+		  			nombrex=nombrex+nombre[i];
+		  		}
+			}
+			nombreImagen=nombrex;		
+		}
+
+  		// Event listener.
+		document.getElementById('img_input').addEventListener('change', handleFileSelect, false);
+		function POST(){
+			var xmlhttp = new XMLHttpRequest();
+			httpText = "http://";
+			var ipValue = document.getElementById("ip").value;
+			var portValue = document.getElementById("puerto").value;
+			xmlhttp.open("POST", httpText+ipValue+":"+portValue);
+			xmlhttp.setRequestHeader("Content-Type", "text/plain");
+			var name = "name: " + nombreImagen;
+			var width = "width: " + img.width;
+			var height = "height: " + img.height;
+			var data = "img: " + img_data;
+			var radios = document.getElementsByName('opcion');
+			opc=0;
+			for (var i=0, length=radios.length; i<length; i++) {
+			  if (radios[i].checked) {
+			    opc=radios[i].value;
+			    break;
+			  }
+			}
+			var option = "option: " + opc;
+			xmlhttp.send(name + "\n" + width + "\n" + height + "\n" + data + "\n" + option);
+			document.getElementById("base64_text").innerHTML = "Imagen enviada con exito al servidor.";
+	  	}
+	</script>
+	
+	<div style="text-align:center;">
+		<button id='send_img_button' onclick='POST()'>Procesar</button>
+	</div>
+	
+</body>
+
+<footer>
+	<p style="text-align:right;"> Realizado por: Yendry Dìaz & Esteban Zùñiga</p>
+</footer>
+
+</html>
+

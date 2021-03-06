@@ -1,0 +1,19 @@
+[Unit]
+Description=ImageServer Daemon Process
+
+[Service]
+Type=simple
+
+ExecStart=/usr/bin/ImageServer \
+				--conf_file /etc/server/config.conf \
+				--log_file /var/log/ImageServer.log \
+				-d
+
+ExecReload=/bin/kill -HUP $MAINPID
+
+ExecStop= /bin/kill -2 $MAINPID
+
+User=root
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,11 @@
+[Unit]
+Description=Image Server Stop (SO Shutdown) Process
+DefaultDependencies=no
+Before=shutdown.target reboot.target halt.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/.ImageServerStopSO.sh
+
+[Install]
+WantedBy=halt.target reboot.target shutdown.target

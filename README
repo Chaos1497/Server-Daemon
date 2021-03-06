@@ -1,0 +1,24 @@
+Tarea 1: Servicios en MV
+Semestre I - 2021
+Realizado por: Esteban Zùñiga y Yendry Dìaz
+
+Instrucciones para ejecución del servidor:
+
+0. Crear la carpeta server en la ruta /etc/
+1. Ingresar a la carpeta Server
+2. Ejecutar el makefile en modo "root user"
+3. Configurar el archivo config.config que se encuentra en la ruta /etc/server
+4. Ejecutar el comando systemctl status ImageServer para ver el status del servicio (tanto antes como durante y despuès de iniciar el server)
+5. Ejecutar el comando systemctl start ImageServer para iniciar el servidor 
+6. Si desea detener el servidor, ejecutar el comando systemctl stop ImageServer
+7. Si desea reiniciar el servidor, ejecutar el comando systemctl restart ImageServer
+
+Ya el servicio se encuetra configurado para arrancar junto al Sistema Operativo y detenerse cuando se apague o reinicie el equipo.
+
+Instrucciones para cliente:
+
+1. Abrir archivo index.html con el navegador de su preferencia.
+2. Seleccionar un archivo imagen en el equipo local.
+3. Elegir la función a realizar (fltrar o clasificar).
+4. Ingresar dirección IP y puerto del servidor.
+5. Dar click en el botòn Procesar para enviar la imagen. 
