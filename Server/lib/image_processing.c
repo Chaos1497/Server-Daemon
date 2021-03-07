@@ -19,7 +19,7 @@ void convertImageToGrayscale(const int * ptr_height, const int * ptr_width, unsi
 void classifyImageByColor(const int * ptr_height, const int * ptr_width, unsigned char *** img, int * ptr_color_type);
 void incrementColorCounter(const unsigned char * ptr_R_value, const unsigned char * ptr_G_value, const unsigned char * ptr_B_value, int * ptr_R_counter, int * ptr_G_counter, int * ptr_B_Counter);
 void classifyImage(const int * ptr_R_counter, const int * ptr_G_counter, const int * ptr_B_counter, int * ptr_color_type);
-void histogramEqualisation(int cols, int rows, char* input_file_name, char* output_file_name)
+void histogramEqualisation(int cols, int rows, char* input_file_name, char* output_file_name);
 void generateBitmapImage(int height, int width, unsigned char *** image, char * imageFileName);
 unsigned char * createBitmapFileHeader(int height, int width, int paddingSize);
 unsigned char * createBitmapInfoHeader(int height, int width);
