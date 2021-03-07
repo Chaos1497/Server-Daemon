@@ -6,9 +6,9 @@
 #include <stdlib.h>
 #include <netinet/in.h>
 #include <string.h>
-#include <datahandler.h>
-#include <processhandler.h>
-#include <image_processing.h>
+#include "processhandler.h"
+#include "image_processing.h"
+#include "datahandler.h"
 
 #define TRUE 1
 #define FALSE 0
@@ -139,10 +139,10 @@ void * processing(void *ptr){
                 // Converting image to gray scale. This is for applying mean and median filter.
                 convertImageToGrayscale(&height, &width, img);
                 // Setting the string path for storing the filtered median image.
-                char * equalizeImageFileName = mergeString(info.median_path, current_process->file);
+                char * equalizeImageFileName = mergeString(info.equa_path, current_process->file);
                 // Applying median filter and storing images.
                 histogramEqualisation(&height, &width, img, output_img);  
-                generateBitmapImage(height, width, output_img, mergeString(equalizeFilterImageFileName, ".bmp"));     //Save the image
+                generateBitmapImage(height, width, output_img, mergeString(equalizeImageFileName, ".bmp"));     //Save the image
 
                 printf("-> Image equalized and saved\n");
             }else{
