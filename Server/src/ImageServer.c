@@ -9,7 +9,7 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <errno.h>
-#include <httpserver.h>
+#include "./lib/httpserver.h"
 
 static int running = 0;
 static int counter = 0;
